@@ -166,6 +166,9 @@ kbl(bdata2, booktabs = T, align = "c", caption = "Resultados por operador y máq
   collapse_rows(columns = 1:3, latex_hline = "major", valign = "middle") %>%
   kable_styling(position = "center", latex_options = "hold_position")
 ```
+Escriba el modelo lineal para este experimento, explique los términos e interprete el
+análisis de varianza para los datos. Concluya.
+
 
 
 # Problema 3
