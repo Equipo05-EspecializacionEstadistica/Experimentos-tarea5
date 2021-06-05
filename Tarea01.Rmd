@@ -94,6 +94,9 @@ library(factoextra)
 library(dendextend)
 library(purrr)
 library(ggplot2)
+library(GAD)
+library(lme4)
+
 ```
 
 
@@ -157,7 +160,7 @@ maq <- rep(c("Machine1", "Machine2", "Machine3", "Machine4"), each= 6)
 length(oper); length(y); length(maq)
 maq
 
-bdata2 <- as.data.frame(cbind(oper, y, maq))
+bdata2 <- as.data.frame(cbind(maq, oper, y))
 
 ```
 
@@ -166,9 +169,85 @@ kbl(bdata2, booktabs = T, align = "c", caption = "Resultados por operador y máq
   collapse_rows(columns = 1:3, latex_hline = "major", valign = "middle") %>%
   kable_styling(position = "center", latex_options = "hold_position")
 ```
-Escriba el modelo lineal para este experimento, explique los términos e interprete el
-análisis de varianza para los datos. Concluya.
+*Escriba el modelo lineal para este experimento, explique los términos e interprete el análisis de varianza para los datos. Concluya.*
 
+A continuación, se describirán las características del diseño total del experimento. 
+
+Dado que es un experimentos con diseño de efectos anidados balanceados, la ecuación que describe este modelo es la siguiente: 
+
+\begin{align*}
+y_{kmo} = \mu + \tau_{m} + \beta_{m(o)} + \varepsilon_{k(mo)}
+\end{align*}
+
+$$Con K = 1, \cdots , 24$$
+$$m = 1,2,3,4.$$
+$$o=1,2,3.  $$
+
+Existen dos factores: 
+
+1. Máquina y, 
+2.  Operador.
+
+Con cuatro niveles del factor Máquina y tres niveles el factor operador. Es decir, 4x3, respectivamente. 
+
+La relación entre ambos factores es que están **anidados**. Ya que una característica de este diseño es que hay dos factores, donde el factor _Máquina_ es fijo, mientras que los _Operadores_ son aleatorios, pues los tres "operadores en cada máquina (...) fueron seleccionados al azar". 
+Otra característica es que los niveles _j_ del factor _Operadores_ son similares pero no idénticos para las  diferentes máquinas, ya que los niveles de _Operadores_ están marcados por etiquetas. Esto lleva rechazar que sean niveles cruzados. A continuación, se muestra una tabla que resume la anterior información.
+
+```{r, include=FALSE}
+resAni <- data.frame(Factores = c("Máquina", "Operador"),
+           Factor = c("Fijo", "Aleatorio"),
+           Anidación = c("Principal", "Anidado"),
+           Tamaño = c("1,...,4", "1,...3"),
+           Hipótesis_Nula = c("Ho : Mui = Muj", "sigma = 0"))
+           
+
+```
+```{r, echo=FALSE}
+kbl(resAni, booktabs = T, align = "c", caption = "Resumen de los términos del modelo")  %>%
+  collapse_rows(columns = 1:5, latex_hline = "major", valign = "middle") %>%
+  kable_styling(position = "center", latex_options = "hold_position")
+```
+
+Para elaborar el análisis de ANOVA es necesario tener en consideración que el efecto del factor _Operador_ es aleatorio, por lo que su hipótesis nula corresponde a una prueba de variación, la cuál es : 
+$H_{o} : \sigma^2 = 0$ . Mientras que la prueba del factor _Máquina_ a ser fijo, su hipótesis nula corresponde a una prueba de igualdad de medias, la cuál es :  $\mu_{i} = \mu_{j}$. 
+
+Entonces, para analizar la ANOVA, se corre el siguiente código. El cuál permite conocer los valores correctos del estadístico F.
+```{r, ANOVA }
+roper <- as.random(oper)
+fmaq <- as.fixed(maq)
+modelo <- lm(y ~ fmaq + roper%in%fmaq)
+gad(modelo) 
+```
+Con un P valor de 0.0728 no existe efecto significativo del tratamiento de maquinaria sobre las superficies de metal, por lo que no se rechaza la hipótesis de $\mu_{i} = \mu_{j}$ con una confianza del 95%. Por otra parte, hay variabilidad de las superficies de metal en cada operador de cada máquina, por lo que se rechaza la hipótesis nula de $H_{o} : \sigma^2 = 0$  con un P valor de 0.013 con una confianza del 95%. Por lo anterior, se debería de tratar de reducir esta variabilidad al entrenar mejor a los operadores. 
+
+```{r, componentes varianza}
+compon <- lmer(y ~ maq + (1|maq:oper))
+summary(compon)
+# estima los componentes de varianza
+1-((133.9)/(133.9+84.5))
+```
+Respecto a los **componentes de varianza**, es posible afirmar que el factor anidado (operador en Maquinaria) produce el 61.30952 % de varianza. Lo cuál enfatiza la decisión de rechazar la hipótesis nula de $H_{0} : \sigma^2 = 0$, ya que este tratamiento aporta variabilidad dentro del resultado de las superficies de metal.
+
+```{r, include=FALSE}
+compvar <- data.frame(Fuente_varianza = c("Operador en Máquina", "Error", "Total"),
+           Varianza = c(133.9, 84.5, 128.4),
+           Proporción = c(0.613095, 0.3869048, 1))
+
+```
+```{r, echo=FALSE}
+kbl(compvar, booktabs = T, align = "c", caption = "Resumen de los términos del modelo")  %>%
+  collapse_rows(columns = 1:3, latex_hline = "major", valign = "middle") %>%
+  kable_styling(position = "center", latex_options = "hold_position")
+```
+
+Finalmente, si ignoraramos que hubiese diferentes operadores, y por lo tanto no hubiese efectos aleatorios, se podría simular el siguiente escenario. Si se deseara comprobar el efecto del efecto de _Máquina_, se aplicaría un factorial de una vía balanceado del efecti fijo _Maquinaria_.
+
+```{r}
+sin <- aov(y ~ maq)
+summary(sin)
+```
+
+Se podría concluir que existe un efecto en el tratamiento de las máquinas sobre las superficies de metal, al rechazar la hipótesis de $\mu_{i} = \mu_{j}$ con un P valor de 0.0035.
 
 
 # Problema 3
