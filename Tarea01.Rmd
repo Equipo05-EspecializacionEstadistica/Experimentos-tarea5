@@ -224,7 +224,6 @@ Con un P valor de 0.0728 no existe efecto significativo del tratamiento de maqui
 compon <- lmer(y ~ maq + (1|maq:oper))
 summary(compon)
 # estima los componentes de varianza
-1-((133.9)/(133.9+84.5))
 ```
 Respecto a los **componentes de varianza**, es posible afirmar que el factor anidado (operador en Maquinaria) produce el 61.30952 % de varianza. Lo cuál enfatiza la decisión de rechazar la hipótesis nula de $H_{0} : \sigma^2 = 0$, ya que este tratamiento aporta variabilidad dentro del resultado de las superficies de metal.
 
