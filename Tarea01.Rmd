@@ -140,8 +140,10 @@ library(lme4)
 
 # Problema 1
 
-# Problema 2: Se estudia el acabado de la superficie de metal de ciertas partes hechas por cuatro máquinas. Se realizó un experimento en el cual cada máquina es operada por tres operadores diferentes y se seleccionan y prueban dos especímenes de cada operador.
-Dada la localización de las máquinas, se utilizaron diferentes operadores en cada máquina los cuales fueron seleccionados al azar. Los datos se presentan a continuación.
+# Problema 2
+
+**Se estudia el acabado de la superficie de metal de ciertas partes hechas por cuatro máquinas. Se realizó un experimento en el cual cada máquina es operada por tres operadores diferentes y se seleccionan y prueban dos especímenes de cada operador.**
+**Dada la localización de las máquinas, se utilizaron diferentes operadores en cada máquina los cuales fueron seleccionados al azar. Los datos se presentan a continuación.**
 
 
 
@@ -250,6 +252,11 @@ Se podría concluir que existe un efecto en el tratamiento de las máquinas sobr
 
 
 # Problema 3
+
+**Se diseña un experimento para estudiar la dispersión de los pigmentos de una pintura. Se estudian cuatro mezclas diferentes de un pigmento particular. El procedimiento consiste en preparar una mezcla particular y en aplicarla después a un panel utilizando tres métodos (con brocha, por rocío y con rodillo). La respuesta medida es el porcentaje de reflectancia (coeficiente de reflexión) del pigmento. Se repite el experimento completo en 3 días. Los datos obtenidos se presentan a continuación:**
+
+
+
 
 
 ---
