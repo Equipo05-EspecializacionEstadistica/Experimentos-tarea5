@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.5.9)  8 JUN 2021 23:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.5.9)  8 JUN 2021 23:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Tarea01.tex
-(./Tarea01.tex
+**Tarea05.tex
+(./Tarea05.tex
 LaTeX2e <2018-04-01> patch level 2
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (c:/texlive/2018/texmf-dist/tex/latex/base/article.cls
@@ -737,11 +737,11 @@ Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen183
 \c@nlinenum=\count149
 \TeXr@lab=\toks36
-) (./Tarea01.aux
+) (./Tarea05.aux
 LaTeX Info: Redefining \. on input line 24.
 LaTeX Info: Redefining \% on input line 24.
 )
-\openout1 = `Tarea01.aux'.
+\openout1 = `Tarea05.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 165.
 LaTeX Font Info:    ... okay on input line 165.
@@ -910,12 +910,12 @@ Package pdftex.def Info: images/iimas.jpg  used on input line 192.
 [1
 
 {c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./images/iimas.
-jpg>] (./Tarea01.toc
+jpg>] (./Tarea05.toc
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 )
 \tf@toc=\write4
-\openout4 = `Tarea01.toc'.
+\openout4 = `Tarea05.toc'.
 
 File: images/iimas.jpg Graphic file (type jpg)
 <use images/iimas.jpg>
@@ -935,11 +935,11 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 248.
-<Tarea01_files/figure-latex/unnamed-chunk-3-1.pdf, id=30, 469.755pt x 325.215pt
+<Tarea05_files/figure-latex/unnamed-chunk-3-1.pdf, id=30, 469.755pt x 325.215pt
 >
-File: Tarea01_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
-<use Tarea01_files/figure-latex/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: Tarea01_files/figure-latex/unnamed-chunk-3-1.pdf  used
+File: Tarea05_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
+<use Tarea05_files/figure-latex/unnamed-chunk-3-1.pdf>
+Package pdftex.def Info: Tarea05_files/figure-latex/unnamed-chunk-3-1.pdf  used
  on input line 252.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 File: images/iimas.jpg Graphic file (type jpg)
@@ -956,7 +956,7 @@ File: images/iimas.jpg Graphic file (type jpg)
 <use images/iimas.jpg>
 Package pdftex.def Info: images/iimas.jpg  used on input line 298.
 (pdftex.def)             Requested size: 85.36116pt x 44.34966pt.
-[4 <./Tarea01_files/figure-latex/unnamed-chunk-3-1.pdf>]
+[4 <./Tarea05_files/figure-latex/unnamed-chunk-3-1.pdf>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -1016,7 +1016,7 @@ Package pdftex.def Info: images/iimas.jpg  used on input line 999.
 (pdftex.def)             Requested size: 85.36116pt x 44.34966pt.
 [13]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 999.
-(./Tarea01.aux
+(./Tarea05.aux
 LaTeX Info: Redefining \. on input line 24.
 LaTeX Info: Redefining \% on input line 24.
 )
@@ -1049,7 +1049,7 @@ live/2018/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/2018/texmf-di
 st/fonts/type1/public/lm/lmtk10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/pub
 lic/lm/lmtt10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtti10.pfb
 >
-Output written on Tarea01.pdf (13 pages, 373444 bytes).
+Output written on Tarea05.pdf (13 pages, 373444 bytes).
 PDF statistics:
  182 PDF objects out of 1000 (max. 8388607)
  146 compressed objects within 2 object streams

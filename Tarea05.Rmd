@@ -115,7 +115,7 @@ library(lsmeans)
 \vspace{1cm}{\sc Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas}\\ 
   \vspace{1cm}{\sc Especialización en Estadística Aplicada} \\
        \vspace{1.5cm} {Diseño de Experimentos} \\
-       \vspace{1.5cm} {Tarea 3}
+       \vspace{1.5cm} {Tarea 5}
        }
   
 \date{\vspace{1.5cm}Ciudad de México\\
