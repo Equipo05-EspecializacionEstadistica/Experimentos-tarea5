@@ -183,7 +183,6 @@ analisis <- aov(tinta~lote)
 summary(analisis)
 TukeyHSD(analisis)
 ```
-Por el análisis de Tukey podemos decir que 
 
 ```{r}
 factor.lote <- c("lote2","lote5" ,"lote3" ,"lote1" ,"lote6" ,"lote4" )
@@ -196,6 +195,9 @@ grupos <- data.frame(factor.lote, m.lote, agrupado)
 kbl(grupos, booktabs = T, align = "c", caption = "Comparacion de pares por grupo", col.names = c("Lote", "Promedio desempeño tinte","Grupo")) %>%
 kable_styling(position = "center", latex_options = "hold_position")
 ```
+Utilizando el Análisis de Tukey podemos decir que de los 6 lotes que se muestrearon, los lotes 2, 5, 3 y 1 se desempeñan por debajo de los lotes 6 y 4 dado que estos se agrupan unicamente en 2 grupos.
+La Recomendacion despues de este análisis es: Identificar las diferencias en la fabricación entre estas dos agrupaciónes dado que tenemos evidencia para decir que los tratamientos son diferentes para estos dos grupos.
+
 
 # Problema 2
 
