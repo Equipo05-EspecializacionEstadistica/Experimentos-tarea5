@@ -96,13 +96,9 @@ library(purrr)
 library(ggplot2)
 library(GAD)
 library(lme4)
-<<<<<<< HEAD
 library(dplyr)
-
-=======
 library(agricolae)
 library(lsmeans)
->>>>>>> ayd
 ```
 
 
@@ -145,11 +141,7 @@ library(lsmeans)
 
 
 # Problema 1
-En una fábrica que produce lotes de tinte están preocupados por la consistencia de
-la fuerza del tinte. Para medir la fuerza del tinte se pintan cuadrados de tela bajo
-condiciones controladas. Estos cuadrados de tela se comparan con un estándar, si hay
-coincidencia se califica con 100. Se seleccionaron al azar 6 lotes de tinte, para cada uno
-se seleccionaron al azar 6 cuadrados de tela entintada y se calificaron. Los datos son:
+**En una fábrica que produce lotes de tinte están preocupados por la consistencia de la fuerza del tinte. Para medir la fuerza del tinte se pintan cuadrados de tela bajo  condiciones controladas. Estos cuadrados de tela se comparan con un estándar, si hay coincidencia se califica con 100. Se seleccionaron al azar 6 lotes de tinte, para cada uno se seleccionaron al azar 6 cuadrados de tela entintada y se calificaron. Los datos son:**
 
 ```{r echo = FALSE}
 lote1 <- c(94.5, 93.0, 91.0, 89.0, 96.5, 88.0)
@@ -168,7 +160,7 @@ datos <- cbind(lote,tinta)
 ```
 
 
-Escriba un modelo lineal para este experimento, explique los términos y realice el analisis de varianza para los datos. Concluya.
+**Escriba un modelo lineal para este experimento, explique los términos y realice el analisis de varianza para los datos. Concluya.**
 
 En este problema estamos suponiendo que dado que las telas son entintadas bajo condiciones controladas, es decir no existe variación debido al proceso de entintado o a las telas, partimos del supuesto que cualquier variación en el puntaje del desempeño del tinte proviene de los lotes.
 
@@ -460,13 +452,3 @@ T_metodo$groups
 
 
 ---
-<!-- por si necesitamos incluir referencias -->
-\begin{thebibliography}{99}
-  \bibitem{autor23}
-      Nombre del autor,
-      \emph{Título del libro},
-      núm. ed.,
-      Editorial,
-      año.
-      
-\end{thebibliography}
