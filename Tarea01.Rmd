@@ -80,7 +80,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 ```{r include = FALSE, echo = FALSE}
-##  LIBRERÍAS
+##LIBRERÍAS
 # Aquí vamos a incluir las librerías que necesitemos
 # En donde se pongan pedazos de código, únicamente se comentará
 # Es BUENA PRÁCTICA poner las librerías al principio, por ello las ponemos aquí
@@ -96,6 +96,7 @@ library(purrr)
 library(ggplot2)
 library(GAD)
 library(lme4)
+library(dplyr)
 
 ```
 
@@ -139,6 +140,62 @@ library(lme4)
 
 
 # Problema 1
+En una fábrica que produce lotes de tinte están preocupados por la consistencia de
+la fuerza del tinte. Para medir la fuerza del tinte se pintan cuadrados de tela bajo
+condiciones controladas. Estos cuadrados de tela se comparan con un estándar, si hay
+coincidencia se califica con 100. Se seleccionaron al azar 6 lotes de tinte, para cada uno
+se seleccionaron al azar 6 cuadrados de tela entintada y se calificaron. Los datos son:
+
+```{r echo = FALSE}
+lote1 <- c(94.5, 93.0, 91.0, 89.0, 96.5, 88.0)
+lote2 <- c(89.0, 90.0, 92.5, 88.5, 91.5, 91.5)
+lote3 <- c(88.5, 93.5, 93.5, 88.0, 92.5, 91.5)
+lote4 <- c(100.0, 99.0, 100.0, 98.0, 95.0, 97.5)
+lote5 <- c(91.5, 93.0, 90.0, 92.5, 89.0, 91.0)
+lote6 <- c(98.5, 100.0, 98.0, 100.0, 96.5, 98.0)
+lotes <- as.data.frame(cbind(lote1, lote2, lote3, lote4, lote5, lote6), stringsAsFactors = "T")
+lotes
+
+lote <- c(1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,6)
+tinta <- c(lote1, lote2, lote3, lote4, lote5, lote6)
+lote <- as.factor(lote)
+datos <- cbind(lote,tinta)  
+```
+
+
+Escriba un modelo lineal para este experimento, explique los términos y realice el analisis de varianza para los datos. Concluya.
+
+En este problema estamos suponiendo que dado que las telas son entintadas bajo condiciones controladas, es decir no existe variación debido al proceso de entintado o a las telas, partimos del supuesto que cualquier variación en el puntaje del desempeño del tinte proviene de los lotes.
+
+Bajo ese supuesto podemos decir que se tiene un diseño completamente al azar, unifactorial, de efectos fijos con 6 tratamientos y 6 repeticiones para cada uno.
+
+Donde el modelo lineal es: $y_{ij}=\mu+ \tau_i +  \varepsilon_{ij}$
+$y_{ij}$ es la observacion de la j esima u.e. del i esimo tratamiento,
+$\mu$ es la media general, comun a todas las u.e. 
+$\tau_i$ es el efecto del tratamiento i esimo
+$\varepsilon_{ij}$ es el error experimental de la unidad ij.
+Hay en total 6 tratamientos y 6 repeticiones en cada uno por lo que decimos que es un modelo balanceado.
+
+```{r}
+boxplot(tinta~lote)
+
+analisis <- aov(tinta~lote)
+summary(analisis)
+TukeyHSD(analisis)
+```
+Por el análisis de Tukey podemos decir que 
+
+```{r}
+factor.lote <- c("lote2","lote5" ,"lote3" ,"lote1" ,"lote6" ,"lote4" )
+m.lote <- c( mean(lote2), mean(lote5), mean(lote3), mean(lote1), mean(lote6), mean(lote4))
+m.lote
+agrupado <- c("a_", "a_", "a_", "a_", "_b", "_b")
+
+grupos <- data.frame(factor.lote, m.lote, agrupado)
+
+kbl(grupos, booktabs = T, align = "c", caption = "Comparacion de pares por grupo", col.names = c("Lote", "Promedio desempeño tinte","Grupo")) %>%
+kable_styling(position = "center", latex_options = "hold_position")
+```
 
 # Problema 2
 
