@@ -96,8 +96,13 @@ library(purrr)
 library(ggplot2)
 library(GAD)
 library(lme4)
+<<<<<<< HEAD
 library(dplyr)
 
+=======
+library(agricolae)
+library(lsmeans)
+>>>>>>> ayd
 ```
 
 
@@ -312,10 +317,146 @@ Se podría concluir que existe un efecto en el tratamiento de las máquinas sobr
 
 # Problema 3
 
-**Se diseña un experimento para estudiar la dispersión de los pigmentos de una pintura. Se estudian cuatro mezclas diferentes de un pigmento particular. El procedimiento consiste en preparar una mezcla particular y en aplicarla después a un panel utilizando tres métodos (con brocha, por rocío y con rodillo). La respuesta medida es el porcentaje de reflectancia (coeficiente de reflexión) del pigmento. Se repite el experimento completo en 3 días. Los datos obtenidos se presentan a continuación:**
+**Se diseña un experimento para estudiar la dispersión de los pigmentos de una pintura. Se estudian cuatro mezclas diferentes de un pigmento particular. El procedimiento consiste en preparar una mezcla particular y en aplicarla después a un panel utilizando tres métodos (con brocha, por rocío y con rodillo). La respuesta medida es el porcentaje de reflectancia (coeficiente de reflexión) del pigmento. Se repite el experimento completo en 3 días. Los datos obtenidos se presentan en la tabla \ref{tab:datos32}:**
 
 
 
+```{r datos3, include=FALSE}
+# Cargamos base de datos
+mezcla<-as.factor(rep(rep(1:4,each=9)))
+dia<-as.factor(rep(rep(1:3,each=3),4)) 
+metodo<-as.factor(rep(1:3,12)) 
+y3<-c(c(69.0,73.1,75.2),c(69.8,74.0,76.2),c(70.8,73.8,75.8),c(70.9,74.4,78.2),c(69.6,75.2,77.9),
+      c(71.2,73.8,79.4),c(79.3,79.0,83.5),c(79.0,79.7,84.6),c(77.4,80.7,85.7),c(71.2,74.9, 77.4),
+      c(69.3,73.1,76.5),c(72.4,73.4,77.5))
+
+datos<- as.data.frame(cbind(mezcla,dia,metodo, y3))
+```
+
+
+```{r datos32, echo=FALSE}
+
+kbl(datos, booktabs = T, align = "c", caption = "Resultados del coeficiente de reflexión del pigmento de una pintura")  %>%
+  collapse_rows(columns = 1:4, latex_hline = "major", valign = "middle") %>%
+  kable_styling(position = "center", latex_options = "hold_position")
+```
+
+**Suponga que las mezclas y los métodos de aplicación son factores fijos. Escriba un modelo lineal para este experimento, explique los términos y realice el análisis de varianza para los datos. Concluya.**
+
+
+
+Este experimento se trata de un modelo de parcelas divididas en bloques al azar de las parcelas grandes. En este caso tenemos que la parcela grande es el recipiente donde se preparan las diferentes mezclas y el tratamiento es el tipo de receta de mezcla que tiene 4 factores y el bloque es el día en que se prepara la mezcla y se repite el procdimiento. Las parcelas pequeñas son las muestras de las mezclas y sus tratamiento son los métodos de aplicación que tiene 3 factores, brocha, por rocío y con rodillo.
+
+Un experimento de parcelas divididas en bloques al azar tiene por modelo:
+
+\[  y_{ijk}= \mu + \tau_i + \beta_j + (\tau\beta)_{ij} + \gamma_k + (\tau\gamma)_{ik} + \epsilon_{ijk} \]
+
+con $i=1,2,3,4$, $j=1,2,3$ y $k=1,2,3$.
+
+Cada término significa lo siguiente:
+
+  - $y_{ijk}$ es el porcentaje de reflectancia (coeficiente de reflexión) del pigmento del método de aplicación $k$ en el día $j$ con la mezcla $i$.
+
+  - $\tau_i$ es el efecto de la mezcla $i$.
+  
+  - $\beta_j$ es el efecto del día $j$, el cual es aleatorio. Estos serían los bloques.
+  
+  - $\gamma_k$ es el efecto del tipo de aplicación $k$, brocha, por rocío o con rodillo.
+  
+  - $(\tau\beta)_{ij}$ es el efecto aleatorio de la interacción mezcla-día.
+  
+  - $(\tau\gamma)_{ik}$ es la interacción mezcla - método. Nivel $i$ del tipo de mezcla  con nivel $k$ del tipo de aplicación.
+  
+  - $\epsilon_{ijk}$ es el error experimental del coeficiente de reflexión con el método de aplicación $k$ en el día $j$ con la mezcla $i$.
+  
+  
+Las supocisiones del modelo son las siguientes:
+
+  - $\beta_j,(\tau\beta)_{ij},\epsilon_{ijk}$ son independientes.
+  
+  - $\beta_j\sim N(0,\sigma_{\beta}^{2})$
+  
+  - $(\tau\beta)_{ij}\sim N(0,\sigma_{\tau\beta}^{2})$
+  
+  - $\epsilon_{ijk}\sim N(0,\sigma^2)$
+  
+Vamos a hacer el análisis de varianza.
+
+La tabla de análisis de varianza es la siguiente
+
+|F.V.                                       |     E(CM)                                              |
+|:-----------------------------------------:|:------------------------------------------------------:|
+|Mezcla   $\tau_i$                          |$\sigma^2+4\sigma_{\tau\beta}^{2}+12\theta_{\tau}^{2}$  |
+|Día      $\beta_j$                         |$\sigma^2+12\sigma_{\beta}^2$                           |
+|Mezcla - Día $\tau\beta_{ij}$              |$\sigma^2+4\sigma_{\tau\beta}^{2}$                      |
+|Método   $\gamma_k$                        |$\sigma^2+12\theta_{\tau\beta}^{2}$                     |
+|Mezcla - Método  $(\tau\gamma)_{ij}$       |$\sigma^2+3\theta_{\tau\gamma}^{2}$                     |
+|Error    $\epsilon_{ijk}$                  |$\sigma^2$                                              |
+
+
+  - Para probar no efecto del tipo de mezcla, el estadístico F se construye como $CM_{\tau}/CM_{\tau\beta}$.
+  
+  - Para probar no efecto del método de aplicación, el estadístico F se construye como $CM_{\gamma}/CM_{\epsilon}$.
+  
+  - Para probar que no hay interacción entre $Mezcla-Aplicación$, el estadístico F se construye como $CM_{\tau\beta}/CM_{\epsilon}$.
+  
+En R, la tabla de análisis de varianza la obtenemos de la siguiente forma.
+
+
+```{r}
+dia<-as.random(dia) 
+mezcla<-as.fixed(mezcla) 
+metodo<-as.fixed(metodo)
+
+#anova del modelo
+modelo3<-aov(y3~mezcla+dia+mezcla*dia+metodo+mezcla*metodo) 
+#ANOVA
+m3<-gad(modelo3)
+m3
+#pvalor de mezcla-metodo
+p3<-m3$`Pr(>F)`[5]
+
+estimates(modelo3)
+```
+
+Como el $p-$valor de la interacción `mezcla:metodo` es igual `r p3` a entonces no hay interacción. Lo que si tenemos en este casi es efecto de método y efecto de mezcla.
+
+
+Vamos a realizar ahora Tukey para ver los efectos principales de mezcla y de método.
+
+Para mezcla tenemos los siguientes resultados.
+
+```{r}
+lsmeans(modelo3, pairwise~mezcla)
+```
+
+En la segunda tabla `$contrasts` podemos observar las comparaciones multiples para las parejas de medias entre diferentes tipos de mezclas. Si analizamos sus p-valores, vemos que la mezcla 1 es diferente a la mezcla 2 y la mezcla 3. De igual forma, la mezcla 2 es difernete a la mezcla 3 y la mezlca 3 es diferente a la mezcla 4.
+
+
+En la primera tabla de la salida, `$lsmeans` podemos ver que la mezcla 3 es la que tiene el mayor promedio de respuestas ya que su media es la mayor. Esto es el indicativo de que es la mejor mezcla. La función `HSD.test` del paquete `agricole` también nos muestra las medias por grupos.
+
+
+```{r}
+T_mezcla <- HSD.test(modelo3,"mezcla") 
+T_mezcla$groups
+
+```
+
+
+Vamos a hacer por último el mismo análisis pero para método de aplicación.
+
+```{r}
+
+lsmeans(modelo3, pairwise~metodo)
+```
+
+Podemos observar que los contrastes entre los tres tipos de método de aplicación son significativos. Además, al tener una media mayor el método de aplicación 3 vemos que es el mejor método de aplicación.
+
+```{r}
+T_metodo <- HSD.test(modelo3,"metodo") 
+T_metodo$groups
+
+```
 
 
 ---
